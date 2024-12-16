@@ -1,7 +1,7 @@
 
 CXX=g++
 CFLAGS = -std=gnu++17 -lgfortran -Wall -O3 -w -mavx
-INC=-I faiss -I include/
+INC=-I /workspace/benchmark/code/faiss -I include/
 LFLAGS=-L/workspace/benchmark/code/faiss/build/faiss \
        -L/workspace/benchmark/code/OpenBLAS \
        -lfaiss -lopenblas -lpthread -lm -ldl -lgfortran -fopenmp
