@@ -80,6 +80,17 @@ double RecallAtK(int* answer, int* guess, size_t k, size_t nq){
                             std::back_inserter(tmp));
         count += double(tmp.size());
     }
+    // ################## delete that later ##################
+    // ################## delete that later ##################
+    std::cerr << "answer: ";
+    std::copy(answer.begin(), answer.end(), std::ostream_iterator<int>(std::cerr, " "));
+    std::cerr << std::endl;
+    // Print the 'guess' vector
+    std::cerr << "guess: ";
+    std::copy(guess.begin(), guess.end(), std::ostream_iterator<int>(std::cerr, " "));
+    std::cerr << std::endl;
+    // ################## delete that later ##################
+    // ################## delete that later ##################
     return (count/double(nq*k));
 }
 
