@@ -79,9 +79,8 @@ double RecallAtK(int* answer, int* guess, size_t k, size_t nq){
                             guess+ k*i, guess+ (i+1)*k, // Input iterators for second range 
                             std::back_inserter(tmp));
         count += double(tmp.size());
-    }
-    // ################## delete that later ##################
-    // ################## delete that later ##################
+        // ################## delete that later ##################
+        // ################## delete that later ##################
         std::cerr << "answer: ";
         for (int* it = answer+ k*i; it < answer + (i+1)*k; ++it) {
             std::cerr << *it << " ";
@@ -93,8 +92,10 @@ double RecallAtK(int* answer, int* guess, size_t k, size_t nq){
             std::cerr << *it << " ";
         }
         std::cerr << std::endl;
-    // ################## delete that later ##################
-    // ################## delete that later ##################
+        // ################## delete that later ##################
+        // ################## delete that later ##################
+    }
+
     return (count/double(nq*k));
 }
 
