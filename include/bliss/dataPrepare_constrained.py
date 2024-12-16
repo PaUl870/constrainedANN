@@ -1,5 +1,7 @@
 import numpy as np
 import h5py
+import os, sys
+
 from utils import *
 from binReader import *
 import tensorflow as tf
@@ -121,7 +123,7 @@ def makeTraindata_wAttr(dataname, K):
 # get data and properties
 def loaddata(dataname):
     trainPath = dataname+"/base.fvecs"
-    trainConstPath = dataname+"/label_base_3.txt"
+    trainConstPath = dataname+"/label_base.txt"
     train = fvecs_read(trainPath, c_contiguous=True)
     trainConst = np.genfromtxt(trainConstPath, skip_header=1, delimiter=",",dtype='str')    
     return train, trainConst
@@ -129,7 +131,7 @@ def loaddata(dataname):
 # queries and query properties
 def loadQueries(dataname):
     testPath = dataname+"/query.fvecs"
-    testConstPath = dataname+"/label_query_3.txt"
+    testConstPath = dataname+"/label_query.txt"
     test = fvecs_read(testPath, c_contiguous=True)  
     testConst = np.genfromtxt(testConstPath, skip_header=1, delimiter=",",dtype='str')
     return test, testConst
@@ -153,5 +155,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataname = '{}/'.format(args.data)
-    # makeTraindata(dataname, 100)
+    makeTraindata(dataname, 100)
     makeTraindata_wAttr(dataname, 100)
