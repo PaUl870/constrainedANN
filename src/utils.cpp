@@ -88,7 +88,7 @@ double RecallAtK(int* answer, int* guess, size_t k, size_t nq){
         std::cerr << std::endl;
 
         std::cerr << "guess: ";
-        for (faiss::idx_t* it = guess+ k*i; it < guess+ (i+1)*k; ++it) {
+        for (int* it = guess+ k*i; it < guess+ (i+1)*k; ++it) {
             std::cerr << *it << " ";
         }
         std::cerr << std::endl;
