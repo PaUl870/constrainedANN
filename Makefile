@@ -2,8 +2,10 @@
 CXX=g++
 CFLAGS = -std=gnu++17 -lgfortran -Wall -O3 -w -mavx
 INC=-I faiss -I include/
-LFLAGS=faiss/build/faiss/libfaiss.a OpenBLAS/libopenblas.a -lpthread -lm -ldl -lgfortran -fopenmp
-
+LFLAGS=-L/workspace/benchmark/code/faiss/build/faiss \
+       -L/workspace/benchmark/code/OpenBLAS \
+       -lfaiss -lopenblas -lpthread -lm -ldl -lgfortran -fopenmp
+	   
 index: clean_index
 	$(CXX) $(INC) $(CFLAGS) src/readfile.cpp \
 							src/utils.cpp \
