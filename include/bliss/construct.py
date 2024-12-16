@@ -6,6 +6,7 @@ import os, sys
 import pdb
 from utils import *
 from train import trainIndex
+sys.path.append("/workspace/bsc_fanns/benchmark/")
 from config import config
 import argparse
 
