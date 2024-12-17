@@ -367,7 +367,7 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
             Candidates_pq.pop();
             std::cout << Candidates_pq.top().first;
         }
-        std::endl;
+        std::cout << std::endl;
     }
     t5 = chrono::high_resolution_clock::now();
     // cout<<"time: "<<chrono::duration_cast<chrono::nanoseconds>(t2 - t1).count()<<" ";
