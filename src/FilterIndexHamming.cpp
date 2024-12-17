@@ -361,10 +361,13 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
                 Candidates_pq.push({score[i], Candidates[i]});
             }
         }
+        std::cout << "guess: ";
         for (int i =0; i< num_results; i++){ 
             neighbor_set[qnum*num_results+ i] = Lookup[Candidates_pq.top().second];
             Candidates_pq.pop();
+            std::cout << Candidates_pq.top().first;
         }
+        std::endl;
     }
     t5 = chrono::high_resolution_clock::now();
     // cout<<"time: "<<chrono::duration_cast<chrono::nanoseconds>(t2 - t1).count()<<" ";
