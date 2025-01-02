@@ -363,7 +363,7 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
         }
         std::cout << "dis: ";
         for (int i =0; i< num_results; i++){ 
-            std::cout << "(" << Candidates_pq.top().first << ", " << Candidates_pq.top().second << ")";
+            std::cout << "(" << Candidates_pq.top().first << ", " << Lookup[Candidates_pq.top().second] << ")";
             neighbor_set[qnum*num_results+ i] = Lookup[Candidates_pq.top().second];
             Candidates_pq.pop();
         }
