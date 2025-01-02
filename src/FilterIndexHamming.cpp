@@ -221,7 +221,6 @@ void FilterIndex::query(float* queryset, int nq, vector<vector<string>> querypro
 // start from best cluster -> choose minicluster -> bruteforce search
 void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int num_results, int max_num_distances, size_t qnum)
 {   
-    float q_norm = IPSIMD4ExtAVX(query, query, d);
     
     chrono::time_point<chrono::high_resolution_clock> t1, t2,t2_1, t3, t4, t5, t6;
     t1 = chrono::high_resolution_clock::now();
@@ -363,13 +362,10 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
                 Candidates_pq.push({score[i], Candidates[i]});
             }
         }
-        std::cout << "dis: ";
         for (int i =0; i< num_results; i++){ 
-            std::cout << "(" << Candidates_pq.top().first + q_norm << ", " << Lookup[Candidates_pq.top().second] << ")";
             neighbor_set[qnum*num_results+ i] = Lookup[Candidates_pq.top().second];
             Candidates_pq.pop();
         }
-        std::cout << std::endl;
     }
     t5 = chrono::high_resolution_clock::now();
     // cout<<"time: "<<chrono::duration_cast<chrono::nanoseconds>(t2 - t1).count()<<" ";
