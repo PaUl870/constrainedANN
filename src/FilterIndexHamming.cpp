@@ -77,10 +77,11 @@ void FilterIndex::get_index(string metric, string indexpath, int mode){
     clusterAlgo->train(dataset, nb, indexpath); //take the properties for Mode 3 bliss
     for(uint32_t j = 0; j < nb; ++j){  
         for(uint32_t k = 0; k < d; ++k) {    
-            data_norms[j]=0;             
+            // data_norms[j]=0;             
             data_norms[j] += dataset[j*d +k]*dataset[j*d +k];        
         } 
-        data_norms[j]=data_norms[j]/2;
+        // data_norms[j]=data_norms[j]/2;
+        data_norms[j]=data_norms[j];
     }
     
     uint32_t* invLookup = new uint32_t[nb];
@@ -221,6 +222,7 @@ void FilterIndex::query(float* queryset, int nq, vector<vector<string>> querypro
 // start from best cluster -> choose minicluster -> bruteforce search
 void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int num_results, int max_num_distances, size_t qnum)
 {   
+    std::cout << "qnorm: " << q_norm << std::endl;
     chrono::time_point<chrono::high_resolution_clock> t1, t2,t2_1, t3, t4, t5, t6;
     t1 = chrono::high_resolution_clock::now();
     uint8_t props[numAttr];
@@ -348,14 +350,14 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
     }
     else{
         for (int i =0; i< seen; i++){
-            score[i] = -L2SIMD4ExtAVX(query, dataset_reordered +Candidates[i]*d, data_norms_reordered[Candidates[i]], d);
+            score[i] = L2SIMD4ExtAVX(query, dataset_reordered +Candidates[i]*d, data_norms_reordered[Candidates[i]], q_norm, d);
         }
         for (int i =0; i< num_results; i++){ 
             Candidates_pq.push({score[i],Candidates[i]});
         }
         maxk = Candidates_pq.top().first;
         for (int i =num_results; i< seen; i++){ 
-            if (score[i]< maxk){
+            if (score[i] < maxk){
                 maxk = Candidates_pq.top().first;
                 Candidates_pq.pop();
                 Candidates_pq.push({score[i], Candidates[i]});

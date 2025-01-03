@@ -41,6 +41,7 @@ double L2Square(float* a, float* b, size_t d);
 double L2normSquare(float* a, size_t d);
 float IPSIMD4ExtAVX(float *pVect1, float *pVect2, size_t qty);
 float L2SIMD4ExtAVX(float *pVect1, float *pVect2, float norm_bsq, size_t qty);
+
 // float IPSIMD16ExtAVX512(float *pVect1v,  float *pVect2v,  float *qty_ptr);
 // float L2SIMD16ExtAVX512(float *pVect1, float *pVect2, float norm_bsq, size_t qty);
 float spaseMul(uint8_t* prop, float* weight ,int na);

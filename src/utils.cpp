@@ -81,17 +81,17 @@ double RecallAtK(int* answer, int* guess, size_t k, size_t nq){
         count += double(tmp.size());
         // ################## delete that later ##################
         // ################## delete that later ##################
-        std::cerr << "answer: ";
-        for (int* it = answer+ k*i; it < answer + (i+1)*k; ++it) {
-            std::cerr << *it << " ";
-        }
-        std::cerr << std::endl;
+        // std::cerr << "answer: ";
+        // for (int* it = answer+ k*i; it < answer + (i+1)*k; ++it) {
+        //     std::cerr << *it << " ";
+        // }
+        // std::cerr << std::endl;
 
-        std::cerr << "guess: ";
-        for (int* it = guess+ k*i; it < guess+ (i+1)*k; ++it) {
-            std::cerr << *it << " ";
-        }
-        std::cerr << std::endl;
+        // std::cerr << "guess: ";
+        // for (int* it = guess+ k*i; it < guess+ (i+1)*k; ++it) {
+        //     std::cerr << *it << " ";
+        // }
+        // std::cerr << std::endl;
         // ################## delete that later ##################
         // ################## delete that later ##################
     }
@@ -162,8 +162,12 @@ float IPSIMD4ExtAVX(float *pVect1, float *pVect2, size_t qty) {
     return TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3];
 }
 
+// float L2SIMD4ExtAVX(float *pVect1, float *pVect2, float norm_bsq, size_t qty) {
+//     return (IPSIMD4ExtAVX(pVect1, pVect2, qty) + norm_bsq);
+// }
+
 float L2SIMD4ExtAVX(float *pVect1, float *pVect2, float norm_bsq, size_t qty) {
-    return (IPSIMD4ExtAVX(pVect1, pVect2, qty) -norm_bsq);
+    return (-2*IPSIMD4ExtAVX(pVect1, pVect2, qty) + norm_bsq);
 }
 
 float spaseMul(uint8_t* prop, float* weight ,int na){
