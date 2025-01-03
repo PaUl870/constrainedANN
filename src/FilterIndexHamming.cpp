@@ -221,8 +221,7 @@ void FilterIndex::query(float* queryset, int nq, vector<vector<string>> querypro
 
 // start from best cluster -> choose minicluster -> bruteforce search
 void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int num_results, int max_num_distances, size_t qnum)
-{   
-    std::cout << "qnorm: " << q_norm << std::endl;
+{       
     chrono::time_point<chrono::high_resolution_clock> t1, t2,t2_1, t3, t4, t5, t6;
     t1 = chrono::high_resolution_clock::now();
     uint8_t props[numAttr];
