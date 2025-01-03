@@ -349,7 +349,7 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
     }
     else{
         for (int i =0; i< seen; i++){
-            score[i] = L2SIMD4ExtAVX(query, dataset_reordered +Candidates[i]*d, data_norms_reordered[Candidates[i]], q_norm, d);
+            score[i] = L2SIMD4ExtAVX(query, dataset_reordered +Candidates[i]*d, data_norms_reordered[Candidates[i]], d);
         }
         for (int i =0; i< num_results; i++){ 
             Candidates_pq.push({score[i],Candidates[i]});
