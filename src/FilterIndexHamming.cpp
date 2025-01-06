@@ -118,7 +118,11 @@ void FilterIndex::get_mc_propertiesIndex(){
     maxMCIDs.resize((treelen+1)*nc);
     maxMC = new uint16_t[3*(treelen+1)*nc]; 
     for (int clID = 0; clID < nc; clID++){
-        if (counts[clID+1]- counts[clID]==0) continue; // what  if the cluster size is less than 4. Do something then
+
+        // ############### this causes segfaults!!!!!!!!!!! if the cluster is empty ####### 
+        // if (counts[clID+1]- counts[clID]==0) continue; // what  if the cluster size is less than 4. Do something then
+        // ############### this causes segfaults!!!!!!!!!!! if the cluster is empty ####### 
+        
         //get count of vector properties        
         //get the max
         for (int h=0; h<treelen; h++){ //iterate over tree height
@@ -176,6 +180,7 @@ void FilterIndex::loadIndex(string indexpath){
     data_norms = new float[nb]{0};
     Lookup= new uint32_t[nb];
     counts = new uint32_t[nc+1]; 
+
     // counts = new uint32_t[nc*(treelen+1)+1]; 
     // maxMC = new uint16_t[3*(treelen+1)*nc]; 
     cout<<indexpath<<endl;
@@ -186,6 +191,7 @@ void FilterIndex::loadIndex(string indexpath){
     fread(Lookup, sizeof(uint32_t), nb, f4);
     FILE* f5 = fopen((indexpath+"/counts.bin").c_str(), "r");
     fread(counts, sizeof(uint32_t), nc+1, f5);
+
     get_mc_propertiesIndex();
     //this changes Lookup
     for (int i =0; i< nc*(treelen+1); i++){
@@ -196,6 +202,7 @@ void FilterIndex::loadIndex(string indexpath){
             return properties[a] < properties[b];
             });
     }
+
     // reorder data and index
     dataset_reordered = new float[nb*d];
     data_norms_reordered = new float[nb];
@@ -259,12 +266,15 @@ void FilterIndex::findNearestNeighbor(float* query, vector<string> Stprops, int 
     if (querymode == "fixed"){
         while(seen<max_num_distances && seenbin<nc){ 
             uint32_t bin = simid[seenbin];
+
             seenbin++; // not if we are probing multiple subbins, in case of varying #attrs
+            
             int id = bin*(treelen+1);
             bin = bin*(treelen+1);
 
             //get which sub-cluster query belongs to
             uint16_t membership = getclusterPart(maxMC+ bin*3 , props, treelen);
+
             bin = bin+membership;
             for (int i =counts[bin]; i< counts[bin+1] && seen<max_num_distances; i++){
                 // __builtin_prefetch (properties_reordered +(i+2)*numAttr, 0, 2); software prefect is not very useful here
