@@ -2,7 +2,30 @@
 #include <fstream>
 #include "FilterIndex.h"
 
-// #define DATAPATH "/scratch/gg29/data/"
+#include <unistd.h>
+
+
+void peak_memory_footprint()
+{
+
+  unsigned iPid = (unsigned)getpid();
+
+  std::cout << "PID: " << iPid << std::endl;
+
+  std::string status_file = "/proc/" + std::to_string(iPid) + "/status";
+  std::ifstream info(status_file);
+  if (!info.is_open())
+  {
+    std::cout << "memory information open error!" << std::endl;
+  }
+  std::string tmp;
+  while (getline(info, tmp))
+  {
+    if (tmp.find("Name:") != std::string::npos || tmp.find("VmPeak:") != std::string::npos || tmp.find("VmHWM:") != std::string::npos)
+      std::cout << tmp << std::endl;
+  }
+  info.close();
+}
 
 int main(int argc, char** argv)
 {
@@ -36,6 +59,7 @@ int main(int argc, char** argv)
     myFilterIndex.query(queryset, nq, queryprops, num_results, nprobe);
     t2 = chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = t2 - t1;
+    peak_memory_footprint();
 
     int32_t* output = myFilterIndex.neighbor_set;
     int output_[num_results*nq];
